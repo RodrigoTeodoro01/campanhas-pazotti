@@ -64,7 +64,9 @@ const ALL_FINAL = [
   '(Vazio)',
   'ACOMPANHAMENTO',
   'ATINGIU A META',
-  'NÃO ATINGIU A META'
+  'NÃO ATINGIU A META',
+  'CANCELADA',
+  'FECHAMENTO MÊS FUTURO'
 ];
 
 const MONTHS = [
@@ -374,6 +376,8 @@ const Campaigns = ({ filteredData, searchTerm, setSearchTerm, currentGid, setCur
                   <option value="ACOMPANHAMENTO">ACOMPANHAMENTO</option>
                   <option value="ATINGIU A META">ATINGIU A META</option>
                   <option value="NÃO ATINGIU A META">NÃO ATINGIU A META</option>
+                  <option value="CANCELADA">CANCELADA</option>
+                  <option value="FECHAMENTO MÊS FUTURO">FECHAMENTO MÊS FUTURO</option>
                 </select>
               </td>
               <td className="actions-cell">
