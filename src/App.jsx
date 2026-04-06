@@ -535,7 +535,7 @@ const App = () => {
       </main>
 
       <footer className="main-footer container">
-        <p>&copy; 2026 Pazotti Distribuidora - Time de Análises de Vendas</p>
+        <p>&copy; 2026 Grupo Pazotti - Desenvolvido pelo setor de Análises de Vendas para uso exclusivo</p>
       </footer>
 
       <style>{`
