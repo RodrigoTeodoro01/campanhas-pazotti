@@ -395,6 +395,7 @@ const Campaigns = ({ filteredData, searchTerm, setSearchTerm, currentGid, setCur
 const App = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [view, setView] = useState('dashboard'); 
   const [searchTerm, setSearchTerm] = useState('');
   const [currentGid, setCurrentGid] = useState('753985639');
@@ -417,10 +418,12 @@ const App = () => {
   }, [currentGid]);
 
   const handleUpdate = async (n, field, value) => {
+    setIsSaving(true);
     setData(prev => prev.map(row => 
       row['Nº'] === n ? { ...row, [field]: value } : row
     ));
-    await updateRow(n, field, value);
+    await updateRow(n, field, value, currentGid);
+    setTimeout(() => setIsSaving(false), 800);
   };
 
   const filteredData = data.filter(row => 
@@ -477,6 +480,11 @@ const App = () => {
           </div>
           
           <nav className="header-nav">
+            {isSaving && (
+              <div className="saving-indicator">
+                <div className="dot"></div> Salvando...
+              </div>
+            )}
             <button className={`nav-link ${view === 'dashboard' ? 'active' : ''}`} onClick={() => setView('dashboard')}>
               <LayoutDashboard size={20} /> Dashboard
             </button>
@@ -594,6 +602,11 @@ const App = () => {
         .loader-container { height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; }
         .loader { width: 45px; height: 45px; border: 3px solid rgba(212, 175, 55, 0.1); border-radius: 50%; border-top-color: var(--accent-gold); animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        .saving-indicator { font-size: 0.75rem; color: var(--accent-gold); display: flex; align-items: center; gap: 0.5rem; background: rgba(212, 175, 55, 0.1); padding: 0.25rem 0.75rem; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.3); animation: fadeIn 0.3s ease; margin-right: 1rem; }
+        .saving-indicator .dot { width: 8px; height: 8px; background: var(--accent-gold); border-radius: 50%; animation: blink 0.8s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
         .dashboard-header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
         .export-actions { display: flex; gap: 0.75rem; }
