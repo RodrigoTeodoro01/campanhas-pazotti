@@ -13,9 +13,23 @@ function doPost(e) {
   var rowId = params.rowId;
   var field = params.field;
   var value = params.value;
+  var gid = params.gid;
   
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = ss.getSheetByName("ABRIL") || ss.getSheets()[0]; // Tries "ABRIL", falls back to first sheet
+  var sheets = ss.getSheets();
+  var sheet = null;
+  
+  // Encontrar a aba pelo GID
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].getSheetId().toString() === gid) {
+      sheet = sheets[i];
+      break;
+    }
+  }
+  
+  if (!sheet) {
+    sheet = ss.getSheetByName("ABRIL") || ss.getSheets()[0];
+  }
   var data = sheet.getDataRange().getValues();
   
   // Encontrar a coluna correta

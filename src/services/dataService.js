@@ -37,7 +37,7 @@ export const fetchData = async (gid = '753985639') => {
 
 const UPDATE_URL = 'https://script.google.com/macros/s/AKfycbyQDZWV64ChcqH1adbOaOOJu-hQtjj0sytcvSa44TWSmwVT78_u061VUvunToGxjQSKkg/exec';
 
-export const updateRow = async (rowId, field, value) => {
+export const updateRow = async (rowId, field, value, gid) => {
   try {
     const response = await fetch(UPDATE_URL, {
       method: 'POST',
@@ -46,7 +46,7 @@ export const updateRow = async (rowId, field, value) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ rowId, field, value }),
+      body: JSON.stringify({ rowId, field, value, gid }),
     });
     
     console.log(`Update sent: Row ${rowId} - Field ${field} - New Value: ${value}`);
