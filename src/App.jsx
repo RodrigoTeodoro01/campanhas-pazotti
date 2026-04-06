@@ -474,8 +474,8 @@ const App = () => {
           <div className="logo-section">
             <img src={brainLogo} alt="Pazotti Logo" className="header-logo" />
             <div className="title-section">
-              <h1 className="gold-text">TIME DE ANÁLISES</h1>
-              <span className="subtitle">PAZOTTI DISTRIBUIDORA</span>
+              <h1 className="gold-text">PORTAL DE CAMPANHAS TIME DE ANALISES DE VENDAS</h1>
+              <span className="subtitle">GRUPO PAZOTTI</span>
             </div>
           </div>
           
@@ -540,7 +540,7 @@ const App = () => {
         .header-content { display: flex; justify-content: space-between; align-items: center; }
         .logo-section { display: flex; align-items: center; gap: 1.5rem; }
         .header-logo { height: 60px; border-radius: 50%; border: 2px solid var(--accent-gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
-        .title-section h1 { font-size: 1.5rem; margin: 0; line-height: 1; }
+        .title-section h1 { font-size: 1.25rem; margin: 0; line-height: 1.2; text-transform: uppercase; }
         .subtitle { font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.2em; text-transform: uppercase; }
         .header-nav { display: flex; gap: 1rem; }
         .nav-link { background: transparent; color: var(--text-secondary); padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 500; }

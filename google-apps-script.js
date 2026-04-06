@@ -19,7 +19,7 @@ function doPost(e) {
   var sheets = ss.getSheets();
   var sheet = null;
   
-  // Encontrar a aba pelo GID
+  // 1. Encontrar a aba correta pelo GID
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].getSheetId().toString() === gid) {
       sheet = sheets[i];
@@ -28,25 +28,39 @@ function doPost(e) {
   }
   
   if (!sheet) {
-    sheet = ss.getSheetByName("ABRIL") || ss.getSheets()[0];
+    sheet = ss.getSheets()[0];
   }
+  
   var data = sheet.getDataRange().getValues();
   
-  // Encontrar a coluna correta
-  var headers = data[0];
+  // 2. Caçar a linha de cabeçalho correta (procura por "Nº" ou "INDUSTRIA")
+  var headerRowIndex = -1;
+  for (var r = 0; r < data.length; r++) {
+    if (data[r].indexOf("Nº") > -1 || data[r].indexOf("INDUSTRIA") > -1) {
+      headerRowIndex = r;
+      break;
+    }
+  }
+  
+  if (headerRowIndex === -1) return ContentService.createTextOutput("Linha de cabeçalho não encontrada").setMimeType(ContentService.MimeType.TEXT);
+  
+  var headers = data[headerRowIndex];
   var colIndex = headers.indexOf(field);
   
-  if (colIndex === -1) return ContentService.createTextOutput("Coluna não encontrada").setMimeType(ContentService.MimeType.TEXT);
+  if (colIndex === -1) return ContentService.createTextOutput("Coluna '" + field + "' não encontrada").setMimeType(ContentService.MimeType.TEXT);
   
-  // Encontrar a linha correta pelo Nº (asumindo que está na primeira coluna)
-  for (var i = 1; i < data.length; i++) {
-    if (data[i][0] == rowId) {
+  // 3. Procurar a linha correta pelo Nº (asumindo que está na coluna do cabeçalho "Nº")
+  var idColIndex = headers.indexOf("Nº");
+  if (idColIndex === -1) idColIndex = 0; // Fallback para primeira coluna
+  
+  for (var i = headerRowIndex + 1; i < data.length; i++) {
+    if (data[i][idColIndex] == rowId) {
       sheet.getRange(i + 1, colIndex + 1).setValue(value);
       break;
     }
   }
   
-  return ContentService.createTextOutput("Sucesso").setMimeType(ContentService.MimeType.TEXT);
+  return ContentService.createTextOutput("Sucesso na Versão Robusta").setMimeType(ContentService.MimeType.TEXT);
 }
 
 function doGet(e) {
