@@ -403,7 +403,14 @@ const App = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [view, setView] = useState('dashboard'); 
   const [searchTerm, setSearchTerm] = useState('');
-  const [currentGid, setCurrentGid] = useState('753985639');
+  const getCurrentMonthGid = () => {
+    const monthIndex = new Date().getMonth(); // 0 = Janeiro, 4 = Maio, etc.
+    const monthNames = ['JANEIRO','FEVEREIRO','MARÇO','ABRIL','MAIO','JUNHO','JULHO','AGOSTO','SETEMBRO','OUTUBRO','NOVEMBRO','DEZEMBRO'];
+    const currentMonthName = monthNames[monthIndex];
+    const found = MONTHS.find(m => m.name === currentMonthName);
+    return found ? found.gid : MONTHS[MONTHS.length - 1].gid; // fallback para o último mês disponível
+  };
+  const [currentGid, setCurrentGid] = useState(getCurrentMonthGid);
 
   useEffect(() => {
     const load = async () => {
@@ -510,7 +517,7 @@ const App = () => {
           <div className="loader-container">
             <AlertCircle size={48} color="var(--accent-gold)" />
             <p className="gold-text">Nenhuma informação neste período.</p>
-            <button className="primary" onClick={() => setCurrentGid('753985639')}>Abril</button>
+            <button className="primary" onClick={() => setCurrentGid(getCurrentMonthGid())}>Voltar ao mês atual</button>
           </div>
         ) : (
           view === 'dashboard' ? (
