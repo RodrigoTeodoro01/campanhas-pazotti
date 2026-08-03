@@ -77,6 +77,7 @@ const MONTHS = [
   { name: 'MAIO', gid: '1522707814' },
   { name: 'JUNHO', gid: '1895664384' },
   { name: 'JULHO', gid: '76431640' },
+  { name: 'AGOSTO', gid: '1299310370' },
 ];
 
 const ANALYSTS = [
